@@ -41,9 +41,14 @@ public class MaquinaExpendedoraMejorada {
      * Devuelve la cantidad de dinero que el cliente actual lleva introducida
      */
     public int vaciarDineroDeLaMaquina() {
-        int vaciarDinero = totalDineroAcumulado + balanceClienteActual;
-        balanceClienteActual = 0;
-        totalDineroAcumulado = 0;
+        int vaciarDinero = totalDineroAcumulado;
+        if (balanceClienteActual != 0) {
+           System.out.println("no se puede vaciar la máquina, hay una operación en curso!!!");
+           vaciarDinero = -1;
+        }
+        else {
+           totalDineroAcumulado = 0;
+        }
         return vaciarDinero;
     }
     
