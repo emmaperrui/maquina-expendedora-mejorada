@@ -30,13 +30,23 @@ public class MaquinaExpendedoraMejorada {
         return precioBillete;
     }
 
-    /**
+     /**
      * Devuelve la cantidad de dinero que el cliente actual lleva introducida
      */
     public int getBalanceClienteActual() {
-        return balanceClienteActual;
+       return balanceClienteActual;
     }
-
+    
+    /**
+     * Devuelve la cantidad de dinero que el cliente actual lleva introducida
+     */
+    public int vaciarDineroDeLaMaquina() {
+        int vaciarDinero = totalDineroAcumulado + balanceClienteActual;
+        balanceClienteActual = 0;
+        totalDineroAcumulado = 0;
+        return vaciarDinero;
+    }
+    
     /**
      * Simula la introduccion de dinero por parte del cliente actual
      */
