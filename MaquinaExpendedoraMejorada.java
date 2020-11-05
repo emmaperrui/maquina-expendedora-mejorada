@@ -10,6 +10,8 @@ public class MaquinaExpendedoraMejorada {
     private String estacionOrigen;
     // El destino del billete
     private String estacionDestino;
+    //El total de billetes
+    private int numeroBilletesVendidos;
     /**
      * Crea una maquina expendedora de billetes de tren con el 
      * precio del billete y el origen y destino dados. Se asume que el precio
@@ -21,6 +23,7 @@ public class MaquinaExpendedoraMejorada {
         totalDineroAcumulado = 0;
         estacionOrigen = origen;
         estacionDestino = destino;
+        numeroBilletesVendidos = 0;
     }
 
     /**
@@ -31,7 +34,7 @@ public class MaquinaExpendedoraMejorada {
     }
 
      /**
-     * Devuelve la cantidad de dinero que el cliente actual lleva introducida
+    * Devuelve la cantidad de dinero que el cliente actual lleva introducida
      */
     public int getBalanceClienteActual() {
        return balanceClienteActual;
@@ -43,13 +46,24 @@ public class MaquinaExpendedoraMejorada {
     public int vaciarDineroDeLaMaquina() {
         int vaciarDinero = totalDineroAcumulado;
         if (balanceClienteActual != 0) {
-           System.out.println("no se puede vaciar la máquina, hay una operación en curso!!!");
+           System.out.println(vaciarDinero + "no se puede vaciar la máquina, hay una operación en curso!!!");
            vaciarDinero = -1;
         }
         else {
            totalDineroAcumulado = 0;
         }
         return vaciarDinero;
+    }
+    
+    /**
+     * Devuelve el total de billetes vendidos
+     */
+    public int getNumeroBilletesVendidos () { 
+        return numeroBilletesVendidos;
+    }
+    
+    public void imprimeNumeroBilletesVendidos () {
+        System.out.println("Numero de billetes vendidos" + numeroBilletesVendidos);
     }
     
     /**
@@ -82,6 +96,8 @@ public class MaquinaExpendedoraMejorada {
             totalDineroAcumulado = totalDineroAcumulado + precioBillete;
             // Reduce el balance del cliente actual dejandole seguir utilizando la maquina
             balanceClienteActual = balanceClienteActual - precioBillete;
+            //Numero de billetes vendidos
+            numeroBilletesVendidos = numeroBilletesVendidos + 1;
         }
         else {
             System.out.println("Necesitas introducir" + (cantidadDeDineroQueFalta) + "Euros mas!");
