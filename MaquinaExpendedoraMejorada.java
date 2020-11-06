@@ -16,6 +16,8 @@ public class MaquinaExpendedoraMejorada {
     private boolean premioBillete;
     //Numero maximo de billetes
     private int numeroMaximoBilletes;
+    //Billetes con premio
+    private int billeteConPremio;
     /**
      * Crea una maquina expendedora de billetes de tren con el 
      * precio del billete y el origen y destino dados. Se asume que el precio
@@ -30,6 +32,7 @@ public class MaquinaExpendedoraMejorada {
         numeroBilletesVendidos = 0;
         premioBillete = premio;
         numeroMaximoBilletes = maximoBilletes;
+        billeteConPremio = 0;
     }
 
     /**
@@ -82,6 +85,9 @@ public class MaquinaExpendedoraMejorada {
         else {
             if (cantidadIntroducida > 0) {
                 balanceClienteActual = balanceClienteActual + cantidadIntroducida;
+                if (numeroBilletesVendidos >= numeroMaximoBilletes) { 
+                    System.out.println("No se puede introducir más dinero!!!");
+                }
             }
             else {
                 System.out.println(cantidadIntroducida + " no es una cantidad de dinero valida.");
@@ -116,12 +122,16 @@ public class MaquinaExpendedoraMejorada {
                 numeroBilletesVendidos = numeroBilletesVendidos + 1;
                 //El billete tiene descuento
                 if (premioBillete == true) {
-                    descuentoBillete = precioBillete * 0.10;
-                    System.out.println("Enhorabuena!! Ha ganado usted un descuento del " + descuentoBillete + "€ para gastar en la tienda que quiera!!");
+                    billeteConPremio = +1;
+                    if (billeteConPremio == 3) {
+                        descuentoBillete = precioBillete * 0.10;
+                        System.out.println("Enhorabuena!! Ha ganado usted un descuento del " + descuentoBillete + "€ para gastar en la tienda que quiera!!");
+                        billeteConPremio = 0;
+                    }
                 }
-            }
-            else {
-                System.out.println("Necesitas introducir" + (cantidadDeDineroQueFalta) + "Euros mas!");
+                else {
+                    System.out.println("Necesitas introducir" + (cantidadDeDineroQueFalta) + "Euros mas!");
+                }
             }
         }
     }
