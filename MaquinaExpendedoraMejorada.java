@@ -1,5 +1,5 @@
 public class MaquinaExpendedoraMejorada {
-    
+
     // El precio del billete
     private int precioBillete;
     // La cantidad de dinero que lleva metida el cliente actual
@@ -14,12 +14,14 @@ public class MaquinaExpendedoraMejorada {
     private int numeroBilletesVendidos;
     //Maquina con premio
     private boolean premioBillete;
+    //Numero maximo de billetes
+    private int numeroMaximoBilletes;
     /**
      * Crea una maquina expendedora de billetes de tren con el 
      * precio del billete y el origen y destino dados. Se asume que el precio
      * del billete que se recibe es mayor que 0.
      */
-    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino, boolean premio) {
+    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino, boolean premio, int maximoBilletes) {
         precioBillete = precioDelBillete;
         balanceClienteActual = 0;
         totalDineroAcumulado = 0;
@@ -27,6 +29,7 @@ public class MaquinaExpendedoraMejorada {
         estacionDestino = destino;
         numeroBilletesVendidos = 0;
         premioBillete = premio;
+        numeroMaximoBilletes = maximoBilletes;
     }
 
     /**
@@ -36,57 +39,60 @@ public class MaquinaExpendedoraMejorada {
         return precioBillete;
     }
 
-     /**
-    * Devuelve la cantidad de dinero que el cliente actual lleva introducida
+    /**
+     * Devuelve la cantidad de dinero que el cliente actual lleva introducida
      */
     public int getBalanceClienteActual() {
-       return balanceClienteActual;
+        return balanceClienteActual;
     }
-    
+
     /**
      * Devuelve la cantidad de dinero que el cliente actual lleva introducida
      */
     public int vaciarDineroDeLaMaquina() {
         int vaciarDinero = totalDineroAcumulado;
         if (balanceClienteActual != 0) {
-           System.out.println(vaciarDinero + "no se puede vaciar la máquina, hay una operación en curso!!!");
-           vaciarDinero = -1;
+            System.out.println(vaciarDinero + "no se puede vaciar la máquina, hay una operación en curso!!!");
+            vaciarDinero = -1;
         }
         else {
-           totalDineroAcumulado = 0;
+            totalDineroAcumulado = 0;
         }
         return vaciarDinero;
     }
-    
+
     /**
      * Devuelve el total de billetes vendidos
      */
     public int getNumeroBilletesVendidos () { 
         return numeroBilletesVendidos;
     }
-    
+
     public void imprimeNumeroBilletesVendidos () {
         System.out.println("Numero de billetes vendidos" + numeroBilletesVendidos);
     }
-    
+
     /**
      * Simula la introduccion de dinero por parte del cliente actual
      */
     public void introducirDinero(int cantidadIntroducida) {
         if (cantidadIntroducida > 0) {
             balanceClienteActual = balanceClienteActual + cantidadIntroducida;
+            if (numeroBilletesVendidos >= numeroMaximoBilletes) { 
+                System.out.println("No se puede introducir más dinero!!!");
+            }
         }
         else {
             System.out.println(cantidadIntroducida + " no es una cantidad de dinero valida.");
         }        
     }
-    
+
     /**
      * Imprime un billete para el cliente actual
      */
     public void imprimirBillete(){
         int cantidadDeDineroQueFalta;
-            cantidadDeDineroQueFalta = precioBillete - balanceClienteActual;
+        cantidadDeDineroQueFalta = precioBillete - balanceClienteActual;
         double descuentoBillete = 0.10;
         if (cantidadDeDineroQueFalta <= 0) {   
             // Simula la impresion de un billete
@@ -104,15 +110,18 @@ public class MaquinaExpendedoraMejorada {
             numeroBilletesVendidos = numeroBilletesVendidos + 1;
             //El billete tiene descuento
             if (premioBillete == true) {
-             descuentoBillete = precioBillete * 0.10;
-             System.out.println("Enhorabuena!! Ha ganado usted un descuento del " + descuentoBillete + "€ para gastar en la tienda que quiera!!");
+                descuentoBillete = precioBillete * 0.10;
+                System.out.println("Enhorabuena!! Ha ganado usted un descuento del " + descuentoBillete + "€ para gastar en la tienda que quiera!!");
+            }
+            if (numeroBilletesVendidos >= numeroMaximoBilletes) { 
+                System.out.println("No se pueden imprimir más billetes!!!");
             }
         }
         else {
             System.out.println("Necesitas introducir" + (cantidadDeDineroQueFalta) + "Euros mas!");
         }
     }
-    
+
     /**
      * Cancela la operacion de compra del cliente actual y le
      * devuelve al cliente el dinero que ha introducido hasta el momento
